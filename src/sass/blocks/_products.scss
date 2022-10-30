@@ -1,0 +1,40 @@
+.products {
+    &__form, &__item {
+        display: flex;
+        padding: 10px 10px;
+        width: 350px;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        align-content: center;
+    }
+    &__item {
+        margin: 5px 0;
+        border: 1px solid #c8c4c4;
+        border-radius: 8px;
+    }
+    &__quantity, &__price, &__group {
+        width: 200px;
+        height: 40px;
+        border-radius: 5px;
+        border: 1px solid #c8c4c4;
+        padding: 0px 5px;
+        line-height: 40px;
+    }
+    &__price, &__group, &__stock {
+        width: 50px;
+        font-size: 10px;
+        border: none;
+        line-height: 10px;
+        text-align: center;
+    } 
+    &__price {
+        padding-top: 6px;
+    }
+    &__group {
+        padding-top: 10px;
+    }
+    &__stock {
+        padding-top: 15px;
+    }
+}

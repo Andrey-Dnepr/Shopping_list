@@ -1,0 +1,43 @@
+.input {
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #c8c4c4;
+    padding: 0px 5px;
+    &_new-quantity, &_new-price, &_price {
+        width: 50px;
+        font-size: 10px;
+        text-align: center;
+    }
+    &_new-group, &_new-stock, &_group, &_stock {
+        width: 75px;
+        font-size: 10px;
+        text-align: center;
+    }
+    &_group, &_stock {
+        width: 34px;
+        &::placeholder {
+            color: black;
+        } 
+    }
+    &_price, &_group, &_stock, &_quantity {
+        &::placeholder {
+            color: black;
+        }
+        &:focus {
+            &::placeholder {
+                color: white;
+            }
+        }
+    }
+    &_product {
+        border: none;
+        &::placeholder {
+            color: black;
+        }    
+    }
+    &_quantity {
+        font-size: 12px;
+    }
+
+}

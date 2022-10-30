@@ -1,0 +1,54 @@
+.btn {
+    margin-top: 10px;
+    width: 100px;
+    height: 50px;
+    border-radius: 8px;
+    font-size: 20px;
+    background-color: rgb(81, 167, 242);
+    color: #ffffff;
+    border: none;
+    text-transform: uppercase;
+    box-shadow: 0px 0px 4px gray;
+    transition: 0.5s all;
+    &_refresh-stocks, &_shoping-list {
+        width: 150px;
+        display: block;
+        margin: 10px auto;
+        font-size: 15px;
+    }
+    &__wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+    &_add-product, &_change-product, &_refresh-product, &_cancel, &_delete-product {
+        width: 50px;
+        height: 40px;
+        font-size: 15px;
+        margin: 0;
+    }
+    &_list {
+        width: 200px;
+        height: 50px;
+        display: block;
+        margin: 10px auto;
+        font-size: 16px;
+        
+    }
+    &_add-product {
+        background-color: rgb(107, 208, 109);
+        width: 75px;
+    }
+    &_refresh-product {
+        background-color: rgb(107, 208, 109);
+        font-size: 12px;
+    }
+    &_cancel, &_change-product {
+        font-size: 10px;
+    }
+    &_delete-product {
+        background-color: rgb(246, 91, 67);
+    }
+    
+}

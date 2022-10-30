@@ -1,0 +1,38 @@
+{
+    "object1" : {
+        "name" : "Молоко 2,5% 1 литр",
+        "quantity" : 2,
+        "price" : 25.45,
+        "group" : 2,
+        "stock" : 3
+
+    },
+    "object2" : {
+        "name" : "Авокадо",
+        "quantity" : 1,
+        "price" : 60,
+        "group" : 1,
+        "stock" : 3
+    },
+    "object3" : {
+        "name" : "Сосиски молочные",
+        "quantity" : 1,
+        "price" : 45.45,
+        "group" : 3,
+        "stock" : 3
+    },
+    "object4" : {
+        "name" : "Лосось слабосоленый",
+        "quantity" : 1,
+        "price" : 160,
+        "group" : 5,
+        "stock" : 3
+    },
+    "object5" : {
+        "name" : "Яйца 10 шт.",
+        "quantity" : 1,
+        "price" : 66,
+        "group" : 4,
+        "stock" : 3
+    }
+}

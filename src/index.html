@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping list</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+    <header class="title hide"><h1>Shopping list</h1></header>
+
+    <div class="hello__window hide">
+        <div class="login">
+            <div class="login__title"><h2>Hello!</h2></div>
+            <form action="#" class="login__form">
+                <input required placeholder="Ваше имя" name="name" type="text" class="input input_login-name">
+                <input required placeholder="Ваш пароль" name="pass" type="text" class="input input_login-pass">
+                <button class="btn btn_login">Sig in</button>
+            </form>
+            <div class="login__or">or</div>
+            <a href="#" class="login__new">Create an account</a>        
+        </div>
+    </div>
+
+    <div class="menu__window hide">
+        <button class="btn btn_refresh-stocks">Refresh stocks</button>
+        <button class="btn btn_shoping-list">Shopping list</button>
+        </div>
+    </div>
+
+    <div class="refresh__window">
+        <div class="products">
+            <button class="btn btn_list">Show shopping list</button>
+            <form action="#" class="products__form">
+                <input required placeholder="Название продукта" name="product-name" type="text" class="input input_new-product">
+                <input required placeholder="Кол-во" name="product-quantity" type="text" class="input input_new-quantity">
+                <input required placeholder="Цена" name="product-price" type="text" class="input input_new-price">
+                <input required placeholder="Группа 1-10" name="product-group" type="text" class="input input_new-group">
+                <input required placeholder="Запас" name="product-stock" type="text" class="input input_new-stock">
+                <button class="btn btn_add-product">Add</button>
+            </form> 
+        </div>
+    </div>
+    
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
