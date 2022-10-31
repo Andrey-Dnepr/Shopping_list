@@ -6,7 +6,7 @@
 @import 'blocks/products';
 
 * {
-    font-family: 'Fuzzy Bubbles', sans-serif;
+    font-family: 'Amatic SC', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -17,6 +17,7 @@ html {
 
 body {
     position: relative;
+    border-color: white;
 }
 .hide {
     display: none;
@@ -39,6 +40,8 @@ body {
         display: block;
         width: 150px;
         margin: 0 auto;
+        font-size: 60px;
+        line-height: 60px;
         text-align: center;
     }
 }

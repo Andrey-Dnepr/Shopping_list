@@ -23,18 +23,14 @@
     }
     &__price, &__group, &__stock {
         width: 50px;
-        font-size: 10px;
-        border: none;
-        line-height: 10px;
-        text-align: center;
-    } 
-    &__price {
+        font-size: 15px;
         padding-top: 6px;
-    }
-    &__group {
-        padding-top: 10px;
+        border: none;
+        line-height: 15px;
+        text-align: center;
     }
     &__stock {
-        padding-top: 15px;
+        padding-top: 12px;
+        font-size: 20px;
     }
 }

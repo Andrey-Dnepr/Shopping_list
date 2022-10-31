@@ -6,38 +6,35 @@
     padding: 0px 5px;
     &_new-quantity, &_new-price, &_price {
         width: 50px;
+        font-family: 'Roboto Mono', monospace;
         font-size: 10px;
         text-align: center;
     }
     &_new-group, &_new-stock, &_group, &_stock {
         width: 75px;
-        font-size: 10px;
+        font-family: 'Roboto Mono', monospace;
+        font-size: 15px;
         text-align: center;
     }
     &_group, &_stock {
-        width: 34px;
-        &::placeholder {
-            color: black;
-        } 
+        width: 34px; 
     }
     &_price, &_group, &_stock, &_quantity {
-        &::placeholder {
-            color: black;
-        }
-        &:focus {
-            &::placeholder {
-                color: white;
-            }
-        }
+        font-family: 'Roboto Mono', monospace;
+        background-color: white;
+        color: black;
     }
     &_product {
+        font-size: 22px;
         border: none;
-        &::placeholder {
-            color: black;
-        }    
+        background-color: white;
+        color: black;    
     }
     &_quantity {
-        font-size: 12px;
+        font-size: 18px;
+    }
+    &_new-product {
+        font-size: 22px;
     }
 
 }

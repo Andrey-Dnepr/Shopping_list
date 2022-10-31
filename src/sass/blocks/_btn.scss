@@ -3,18 +3,22 @@
     width: 100px;
     height: 50px;
     border-radius: 8px;
-    font-size: 20px;
+    font-size: 22px;
     background-color: rgb(81, 167, 242);
+    // background-color: rgb(244, 204, 43);
     color: #ffffff;
     border: none;
     text-transform: uppercase;
     box-shadow: 0px 0px 4px gray;
     transition: 0.5s all;
+    &:focus {
+        outline: none;
+    }
     &_refresh-stocks, &_shoping-list {
         width: 150px;
         display: block;
         margin: 10px auto;
-        font-size: 15px;
+        font-size: 25px;
     }
     &__wrap {
         display: flex;
@@ -22,10 +26,10 @@
         gap: 10px;
         justify-content: center;
     }
-    &_add-product, &_change-product, &_refresh-product, &_cancel, &_delete-product {
+    &_add-product, &_change-product, &_refresh-product, &_delete-product {
         width: 50px;
         height: 40px;
-        font-size: 15px;
+        font-size: 22px;
         margin: 0;
     }
     &_list {
@@ -33,7 +37,7 @@
         height: 50px;
         display: block;
         margin: 10px auto;
-        font-size: 16px;
+        font-size: 25px;
         
     }
     &_add-product {
@@ -42,10 +46,10 @@
     }
     &_refresh-product {
         background-color: rgb(107, 208, 109);
-        font-size: 12px;
+        font-size: 18px;
     }
-    &_cancel, &_change-product {
-        font-size: 10px;
+    &_change-product {
+        font-size: 18px;
     }
     &_delete-product {
         background-color: rgb(246, 91, 67);
