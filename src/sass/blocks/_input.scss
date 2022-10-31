@@ -6,13 +6,13 @@
     padding: 0px 5px;
     &_new-quantity, &_new-price, &_price {
         width: 50px;
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Roboto Mono Regular', monospace;
         font-size: 10px;
         text-align: center;
     }
     &_new-group, &_new-stock, &_group, &_stock {
         width: 75px;
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Roboto Mono Regular', monospace;
         font-size: 15px;
         text-align: center;
     }
@@ -20,7 +20,7 @@
         width: 34px; 
     }
     &_price, &_group, &_stock, &_quantity {
-        font-family: 'Roboto Mono', monospace;
+        font-family: 'Roboto Mono Regular', monospace;
         background-color: white;
         color: black;
     }

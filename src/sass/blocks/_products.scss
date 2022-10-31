@@ -12,6 +12,10 @@
         margin: 5px 0;
         border: 1px solid #c8c4c4;
         border-radius: 8px;
+        width: 350px;
+        &__wrap {
+            width: 350px;
+        }
     }
     &__quantity, &__price, &__group {
         width: 200px;
