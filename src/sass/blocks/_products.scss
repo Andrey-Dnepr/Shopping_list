@@ -8,6 +8,9 @@
         justify-content: center;
         align-content: center;
     }
+    &__form {
+        padding-top: 0;
+    }
     &__item {
         margin: 5px 0;
         border: 1px solid #c8c4c4;
@@ -17,7 +20,7 @@
             width: 350px;
         }
     }
-    &__quantity, &__price, &__group {
+    &__quantity {
         width: 200px;
         height: 40px;
         border-radius: 5px;
@@ -27,14 +30,28 @@
     }
     &__price, &__group, &__stock {
         width: 50px;
-        font-size: 15px;
-        padding-top: 6px;
+        height: 40px;
+        padding: 0 5px;
+        font-size: 20px;
         border: none;
-        line-height: 15px;
+        line-height: 20px;
         text-align: center;
     }
-    &__stock {
-        padding-top: 12px;
-        font-size: 20px;
+    &__price {
+        font-size: 25px;
+        line-height: 25px;
+        padding-top: 6px;
+    }
+    &__total {
+        width: 200px;
+        font-size: 30px;
+        text-align: right;
+        &__wrap {
+            display: flex;
+            gap: 10px;
+            justify-content: end;
+            align-items: center;
+            padding-bottom: 0px;
+        }
     }
 }

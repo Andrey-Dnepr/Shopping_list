@@ -5,7 +5,7 @@
     border-radius: 8px;
     font-size: 22px;
     background-color: rgb(81, 167, 242);
-    // background-color: rgb(244, 204, 43);
+    // background-color: rgb(109, 213, 239);
     color: #ffffff;
     border: none;
     text-transform: uppercase;
@@ -54,5 +54,10 @@
     &_delete-product {
         background-color: rgb(246, 91, 67);
     }
-    
+    &_menu {
+        display: block;
+        margin: 0 auto;
+        margin-top: 20px;
+        margin-bottom: 100px;
+    }
 }

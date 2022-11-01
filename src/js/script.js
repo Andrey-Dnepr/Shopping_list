@@ -1,7 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
-    const addForm = document.querySelector('.products__form'),
+    const addForm = document.querySelector('.products__item__wrap'),
           body = document.querySelector('body'),
-          headerTitle = document.querySelector('header'),
           menuWindow = document.querySelector('.menu__window'),
           refreshWindow = document.querySelector('.refresh__window'),
           shoppingWindow = document.querySelector('.list__window');
@@ -12,34 +11,38 @@ window.addEventListener('DOMContentLoaded', () => {
     body.addEventListener('click', (event) => {
         event.preventDefault();
         switch (event.target.dataset.btn) {
-            case 'refresh-stocks': 
+            case 'menu':
+                //Вставит приветствие Hello "nickname"! What do we do?
+                refreshWindow.classList.add('hide');
+                shoppingWindow.classList.add('hide');
+                menuWindow.classList.remove('hide');
+                break; 
+            case 'refresh-stocks':
                 openRefreshWindow();
                 addNewProductForm = document.querySelector('.products__form'); 
                 break;
             case 'shoping-list':
-                //Вставит приветствие Hello "nickname"! What do we do?
-                headerTitle.classList.add('hide');
                 menuWindow.classList.add('hide');    
                 shoppingWindow.classList.toggle('hide');
                 refreshWindow.classList.add('hide');         
                 break;
             case 'add-product':
                 if (!addNewProductForm.childNodes[0].value || addNewProductForm.childNodes[0].value === ' ') {
-                    addNewProductForm.childNodes[0].placeholder = 'Введите название продукта';
+                    addNewProductForm.childNodes[0].placeholder = 'Enter a product name!';
+                    addNewProductForm.childNodes[0].style.backgroundColor = 'rgb(109, 213, 239)';
                 } else {
-                    addForm.insertAdjacentElement('afterend', addNewProduct(
+                    let newElement = addNewProduct(
                         addNewProductForm.childNodes[0].value,
                         addNewProductForm.childNodes[2].value,
                         addNewProductForm.childNodes[4].value,
                         addNewProductForm.childNodes[6].value,
                         addNewProductForm.childNodes[8].value
-                    ));
+                    );
+                    addForm.prepend(newElement);
                     //сделать отправку новых данных на сервер
-                    addNewProductForm.childNodes[0].value = '';
-                    addNewProductForm.childNodes[2].value = '';
-                    addNewProductForm.childNodes[4].value = '';
-                    addNewProductForm.childNodes[6].value = '';
-                    addNewProductForm.childNodes[8].value = '';
+                    addNewProductForm.reset(); //сбрасываем значение форм
+                    addNewProductForm.childNodes[0].style.backgroundColor = 'white';
+                    addNewProductForm.childNodes[0].placeholder = "The product's name";
                 }
                 break;
             case 'change-product':
@@ -50,6 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     productsItems.forEach(item => {
                         if (event.target.dataset.btnkey === item.dataset.obj) {
                             item.childNodes[7].classList.toggle('hide'); //под 7 номером у родителя находится елемент с тегом .btn__wrap
+                            item.childNodes[9].classList.toggle('hide');
                             item.childNodes[1].disabled = false;
                             item.childNodes[3].disabled = false;
                         }
@@ -61,10 +65,11 @@ window.addEventListener('DOMContentLoaded', () => {
                         if (event.target.dataset.btnkey === item.dataset.obj) {
                             item.childNodes[1].value = item.childNodes[1].placeholder;
                             item.childNodes[3].value = item.childNodes[3].placeholder;
-                            item.childNodes[7].childNodes[3].value = item.childNodes[7].childNodes[3].placeholder;
-                            item.childNodes[7].childNodes[7].value = item.childNodes[7].childNodes[7].placeholder;
-                            item.childNodes[7].childNodes[11].value = item.childNodes[7].childNodes[11].placeholder;
-                            item.childNodes[7].classList.toggle('hide'); //под 7 номером у родителя находится елемент с тегом .btn__wrap
+                            item.childNodes[9].childNodes[3].value = item.childNodes[9].childNodes[3].placeholder;
+                            item.childNodes[9].childNodes[9].value = item.childNodes[9].childNodes[7].placeholder;
+                            item.childNodes[9].childNodes[11].value = item.childNodes[9].childNodes[11].placeholder;
+                            item.childNodes[9].classList.toggle('hide'); //под 7 номером у родителя находится елемент с тегом .btn__wrap
+                            item.childNodes[7].classList.toggle('hide');
                             item.childNodes[1].disabled = true;
                             item.childNodes[3].disabled = true;
                         }
@@ -76,12 +81,13 @@ window.addEventListener('DOMContentLoaded', () => {
                     if (event.target.dataset.btnkey === item.dataset.obj) {
                         item.childNodes[1].placeholder = item.childNodes[1].value;
                         item.childNodes[3].placeholder = item.childNodes[3].value;
-                        item.childNodes[7].childNodes[3].placeholder = item.childNodes[7].childNodes[3].value;
-                        item.childNodes[7].childNodes[7].placeholder = item.childNodes[7].childNodes[7].value;
-                        item.childNodes[7].childNodes[11].placeholder = item.childNodes[7].childNodes[11].value;
+                        item.childNodes[9].childNodes[3].placeholder = item.childNodes[9].childNodes[3].value;
+                        item.childNodes[9].childNodes[7].placeholder = item.childNodes[9].childNodes[7].value;
+                        item.childNodes[9].childNodes[11].placeholder = item.childNodes[9].childNodes[11].value;
                         item.childNodes[5].innerHTML = "Edit";
                         item.childNodes[5].style.backgroundColor = 'rgb(81, 167, 242)';
                         item.childNodes[7].classList.toggle('hide'); //под 7 номером у родителя находится елемент с тегом .btn__wrap
+                        item.childNodes[9].classList.toggle('hide');
                         item.childNodes[1].disabled = true;
                         item.childNodes[3].disabled = true;
                         //Сделать отправку ПОСТ запроса на сервер с обновленными данными
@@ -100,7 +106,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     function openRefreshWindow() {
-        headerTitle.classList.toggle('hide');
+        addForm.innerHTML = '';
         menuWindow.classList.toggle('hide');
         refreshWindow.classList.toggle('hide');
         const request = new XMLHttpRequest();
@@ -111,13 +117,14 @@ window.addEventListener('DOMContentLoaded', () => {
             if (request.status === 200) {
                 const data = JSON.parse(request.response);    
                 for (let key in data) {
-                    addForm.insertAdjacentElement('afterend', addNewProduct(
+                    let newElement = addNewProduct(
                         data[key].name, 
                         data[key].quantity, 
                         data[key].price, 
                         data[key].group, 
-                        data[key].stock));    
-                }
+                        data[key].stock);
+                    addForm.append(newElement);
+                };    
             } else {
             //Вставить сообщение об ошибке
             }
@@ -137,12 +144,13 @@ window.addEventListener('DOMContentLoaded', () => {
             <input required disabled placeholder="${name}" value="${name}" name="product-name" type="text" class="input input_new-product input_product">
             <input required disabled placeholder="${quantity}" value="${quantity}" name="product-quantity" type="text" class="input input_new-quantity input_quantity">
             <button data-btnkey="${name}" data-btn="change-product" class="btn btn_change-product">Edit</button>
+            <div class="input_divider hide"></div>
             <div data-wrap="${name}" class="btn__wrap hide">
-                <div class="products__price">Price for 1 unit</div>
+                <div class="products__price">Price</div>
                 <input required placeholder="${price}" value="${price}" name="product-price" type="text" class="input input_price">
                 <div class="products__group">Product group</div>
                 <input required placeholder="${group}" value="${group}" name="product-group" type="text" class="input input_group">
-                <div class="products__stock">Stock</div>
+                <div class="products__stock">Min stock</div>
                 <input required placeholder="${stock}" value="${stock}" name="product-stock" type="text" class="input input_stock">
                 <button data-btnkey="${name}" data-btn="save-product" class="btn btn_refresh-product">Save</button>
                 <button data-btnkey="${name}" data-btn="del-product" class="btn btn_delete-product">Del</button>

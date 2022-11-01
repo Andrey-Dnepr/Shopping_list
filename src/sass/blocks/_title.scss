@@ -1,0 +1,26 @@
+.title {
+    padding-top: 10vh;
+    h1 {
+        display: block;
+        width: 150px;
+        margin: 0 auto;
+        font-size: 60px;
+        line-height: 60px;
+        text-align: center;
+    }
+    &__menu {
+        display: block;
+        width: 188px;
+        text-align: center;
+        font-size: 60px;
+        line-height: 60px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    &__list {
+        text-align: center;
+        width: 300px;
+        font-size: 50px;
+        margin: 0 auto;
+    }
+}

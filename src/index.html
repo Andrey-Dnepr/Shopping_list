@@ -8,9 +8,8 @@
     <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
-    <header class="title"><h1>Shopping list</h1></header>
-
     <div class="hello__window hide">
+        <header class="title"><h1>Shopping list</h1></header>
         <div class="login">
             <div class="login__title"><h2>Hello!</h2></div>
             <form action="#" class="login__form">
@@ -24,6 +23,7 @@
     </div>
 
     <div class="menu__window ">
+        <div class="title__menu">food organizer</div>
         <button data-btn="refresh-stocks" class="btn btn_refresh-stocks">Refresh stocks</button>
         <button data-btn="shoping-list" class="btn btn_shoping-list">Shopping list</button>
         </div>
@@ -31,21 +31,50 @@
 
     <div class="refresh__window hide">
         <div class="products">
-            <button data-btn="shoping-list" class="btn btn_shoping-list btn_list">Show shopping list</button>
+            <div class="title__list">Refresh stocks</div>
             <form action="#" class="products__form">
-                <input placeholder="Название продукта" name="product-name" type="text" class="input input_new-product">
-                <input placeholder="Кол-во" name="product-quantity" type="text" class="input input_new-quantity">
-                <input placeholder="Цена" name="product-price" type="text" class="input input_new-price">
+                <input placeholder="The product's name" name="product-name" type="text" class="input input_new-product">
+                <input placeholder="stock" name="product-quantity" type="text" class="input input_new-quantity">
+                <input placeholder="Price" name="product-price" type="text" class="input input_new-price">
                 <input placeholder="1-10" name="product-group" type="text" class="input input_new-group">
-                <input placeholder="Запас" name="product-stock" type="text" class="input input_new-stock">
+                <input placeholder="min stock" name="product-stock" type="text" class="input input_new-stock">
                 <button data-btn="add-product" class="btn btn_add-product">Add</button>
             </form> 
+            
+            <div class="products__item__wrap">
+
+            </div>
+
+            <button data-btn="menu" class="btn btn_menu">Main menu</button>
+
         </div>
     </div>
     
     <div class="list__window hide">
-        <div>ПРИВЕТ</div>
+        <div class="title__list">Shopping list</div>
+        
+        <div class="products__item">
+            <input required disabled placeholder="Some Name" value="Some Name" name="product-name" type="text" class="input input_new-product input_product">
+            <button data-btnkey="Some Name" data-btn="show" class="btn btn_change-product">Show</button>
+            <button data-btnkey="Some Name" data-btn="ok" class="btn btn_change-product bg-green">Ok!</button>
+            <div data-wrap="Some Name" class="btn__wrap hide">
+                <div class="products__stock pt-5">Current Stock</div>
+                <input required disabled placeholder="12" value="12" name="product-stock" type="text" class="input input_stock">
+                <div class="products__stock">Stock</div>
+                <input required disabled placeholder="7" value="7" name="product-stock" type="text" class="input input_stock">
+                <div class="products__stock">Buy</div>
+                <input required disabled data-price="formula" placeholder="55" value="55" name="product-stock" type="text" class="input input_stock">
+                <button data-btnkey="Some Name" data-btn="del" class="btn btn_delete-product">Del</button>
+            </div>
+        </div>
 
+        <div class="products__total__wrap">
+            <div class="products__total">Total money needed:</div>
+            <input required disabled placeholder="1200,55" value="1200,55" name="total-money" type="text" class="input input_stock input_money">
+        </div>
+
+        <button data-btn="menu" class="btn btn_menu">Main menu</button>
+        
     </div>
     
     <script src="js/script.js"></script>

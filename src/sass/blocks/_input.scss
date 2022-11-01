@@ -10,11 +10,18 @@
         font-size: 10px;
         text-align: center;
     }
-    &_new-group, &_new-stock, &_group, &_stock {
+    &_new-group, &_new-stock, &_new-price, &_group, &_stock {
         width: 75px;
         font-family: 'Roboto Mono Regular', monospace;
         font-size: 15px;
         text-align: center;
+    }
+    &_new-stock, &_new-quantity, &_new-price, &_new-group {
+        font-size: 15px;
+        &::placeholder {
+            font-family: 'Amatic SC Regular', sans-serif;
+            font-size: 17px;
+        }
     }
     &_group, &_stock {
         width: 34px; 
@@ -36,5 +43,13 @@
     &_new-product {
         font-size: 22px;
     }
-
+    &_money {
+        width: 100px;
+    }
+    &_divider {
+        width: 300px;
+        height: 1px;
+        margin: 0 auto;
+        background-color: #c8c4c4;
+    }
 }

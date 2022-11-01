@@ -2,6 +2,7 @@
 @import 'libs/fonts';
 
 @import 'blocks/login';
+@import 'blocks/title';
 @import 'blocks/btn';
 @import 'blocks/input';
 @import 'blocks/products';
@@ -31,21 +32,20 @@ body {
 }
 .refresh__window {
     position: absolute;
-    top: 20px;
     left: 50vw;
     transform: translateX(-50%);
 }
-.title {
-    padding-top: 10vh;
-    h1 {
-        display: block;
-        width: 150px;
-        margin: 0 auto;
-        font-size: 60px;
-        line-height: 60px;
-        text-align: center;
-    }
+.list__window {
+    position: absolute;
+    left: 50vw;
+    transform: translateX(-50%);
 }
 
+.pt-5 {
+    padding-top: 5px;
+}
+.bg-green {
+    background-color: rgb(107, 208, 109);
+}
 
 // @import 'blocks/media';
