@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping list</title>
+    <title>Food organizer</title>
     <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
     <div class="hello__window hide">
-        <header class="title"><h1>Shopping list</h1></header>
+        <header class="title"><h1>Food organizer</h1></header>
         <div class="login">
-            <div class="login__title"><h2>Hello!</h2></div>
             <form action="#" class="login__form">
-                <input required placeholder="Ваше имя" name="name" type="text" class="input input_login-name">
-                <input required placeholder="Ваш пароль" name="pass" type="text" class="input input_login-pass">
-                <button class="btn btn_login">Sig in</button>
+                <input required placeholder="Your nickname" name="name" type="text" class="input input_login-name">
+                <input required placeholder="Your password" name="pass" type="text" class="input input_login-pass">
+                <button data-btn="sigin" class="btn btn_login">Sig in</button>
             </form>
             <div class="login__or">or</div>
             <a href="#" class="login__new">Create an account</a>        
@@ -24,8 +23,10 @@
 
     <div class="menu__window ">
         <div class="title__menu">food organizer</div>
-        <button data-btn="refresh-stocks" class="btn btn_refresh-stocks">Refresh stocks</button>
+        <div class="title__hello"><h2>Hello, my friend!</h2></div>
+        <div class="title__what"><h3>What do we do?</h3></div>
         <button data-btn="shoping-list" class="btn btn_shoping-list">Shopping list</button>
+        <button data-btn="refresh-stocks" class="btn btn_refresh-stocks">Refresh stocks</button>
         </div>
     </div>
 
@@ -52,20 +53,9 @@
     
     <div class="list__window hide">
         <div class="title__list">Shopping list</div>
-        
-        <div class="products__item">
-            <input required disabled placeholder="Some Name" value="Some Name" name="product-name" type="text" class="input input_new-product input_product">
-            <button data-btnkey="Some Name" data-btn="show" class="btn btn_change-product">Show</button>
-            <button data-btnkey="Some Name" data-btn="ok" class="btn btn_change-product bg-green">Ok!</button>
-            <div data-wrap="Some Name" class="btn__wrap hide">
-                <div class="products__stock pt-5">Current Stock</div>
-                <input required disabled placeholder="12" value="12" name="product-stock" type="text" class="input input_stock">
-                <div class="products__stock">Stock</div>
-                <input required disabled placeholder="7" value="7" name="product-stock" type="text" class="input input_stock">
-                <div class="products__stock">Buy</div>
-                <input required disabled data-price="formula" placeholder="55" value="55" name="product-stock" type="text" class="input input_stock">
-                <button data-btnkey="Some Name" data-btn="del" class="btn btn_delete-product">Del</button>
-            </div>
+
+        <div class="products__item__wrap">
+
         </div>
 
         <div class="products__total__wrap">

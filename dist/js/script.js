@@ -6,25 +6,36 @@ window.addEventListener('DOMContentLoaded', () => {
           shoppingWindow = document.querySelector('.list__window');
 
     let productsItems = [],
-        addNewProductForm = [];
+        addNewProductForm = [],
+        totalCost = 0,
+        userNickname = 'account_2'; //в эту переменную записываем данные о текущем пользователе, чтоб подтягтвать его список
 
     body.addEventListener('click', (event) => {
         event.preventDefault();
         switch (event.target.dataset.btn) {
+            // case 'sigin' :
+
+
+            //     break;
             case 'menu':
                 //Вставит приветствие Hello "nickname"! What do we do?
                 refreshWindow.classList.add('hide');
                 shoppingWindow.classList.add('hide');
                 menuWindow.classList.remove('hide');
+                totalCost = 0;
                 break; 
             case 'refresh-stocks':
+                menuWindow.classList.toggle('hide');
+                refreshWindow.classList.toggle('hide');
                 openRefreshWindow();
                 addNewProductForm = document.querySelector('.products__form'); 
                 break;
             case 'shoping-list':
                 menuWindow.classList.add('hide');    
                 shoppingWindow.classList.toggle('hide');
-                refreshWindow.classList.add('hide');         
+                refreshWindow.classList.add('hide');
+                console.dir(shoppingWindow);
+                addShoppingList();
                 break;
             case 'add-product':
                 if (!addNewProductForm.childNodes[0].value || addNewProductForm.childNodes[0].value === ' ') {
@@ -52,7 +63,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     event.target.style.backgroundColor = 'rgb(244, 204, 43)';
                     productsItems.forEach(item => {
                         if (event.target.dataset.btnkey === item.dataset.obj) {
-                            item.childNodes[7].classList.toggle('hide'); //под 7 номером у родителя находится елемент с тегом .btn__wrap
+                            item.childNodes[7].classList.toggle('hide');
                             item.childNodes[9].classList.toggle('hide');
                             item.childNodes[1].disabled = false;
                             item.childNodes[3].disabled = false;
@@ -68,7 +79,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             item.childNodes[9].childNodes[3].value = item.childNodes[9].childNodes[3].placeholder;
                             item.childNodes[9].childNodes[9].value = item.childNodes[9].childNodes[7].placeholder;
                             item.childNodes[9].childNodes[11].value = item.childNodes[9].childNodes[11].placeholder;
-                            item.childNodes[9].classList.toggle('hide'); //под 7 номером у родителя находится елемент с тегом .btn__wrap
+                            item.childNodes[9].classList.toggle('hide');
                             item.childNodes[7].classList.toggle('hide');
                             item.childNodes[1].disabled = true;
                             item.childNodes[3].disabled = true;
@@ -101,14 +112,55 @@ window.addEventListener('DOMContentLoaded', () => {
                         item.remove();
                     }
                 });
-                break;    
+                break;
+            case 'del-from-list':
+                productsItems.forEach(item => {
+                    if (event.target.dataset.btnkey === item.dataset.obj) {
+                        totalCost -= item.dataset.price * item.dataset.buy;
+                        shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
+                        item.remove();
+                    }
+                });
+                break;
+            case 'show':
+                productsItems = document.querySelectorAll('.products__item');
+                productsItems.forEach(item => {
+                    if (event.target.dataset.btnkey === item.dataset.obj) {
+                        item.childNodes[7].classList.toggle('hide');
+                        item.childNodes[3].classList.toggle('btn_inset');
+                    }
+                });    
+                break;
+            case 'ok':
+                productsItems = document.querySelectorAll('.products__item');
+                if (event.target.innerHTML === '\u2714') {
+                    event.target.innerHTML = "Back";
+                    event.target.style.backgroundColor = 'rgb(24, 100, 223)';
+                    productsItems.forEach(item => {
+                        if (event.target.dataset.btnkey === item.dataset.obj) {
+                            item.childNodes[7].classList.add('hide');
+                            item.childNodes[1].style.backgroundColor = 'gray';
+                            item.childNodes[3].classList.toggle('hide');
+                            shoppingWindow.childNodes[1].append(item);
+                        }
+                    });    
+                } else {
+                    event.target.innerHTML = "&#10004;";
+                    event.target.style.backgroundColor = 'rgb(107, 208, 109)';
+                    productsItems.forEach(item => {
+                        if (event.target.dataset.btnkey === item.dataset.obj) {
+                            item.childNodes[1].style.backgroundColor = 'white';
+                            item.childNodes[3].classList.toggle('hide');
+                            shoppingWindow.childNodes[1].prepend(item);
+                        }
+                    }); 
+                }
+                break;
         }
     });
 
-    function openRefreshWindow() {
-        addForm.innerHTML = '';
-        menuWindow.classList.toggle('hide');
-        refreshWindow.classList.toggle('hide');
+    function addShoppingList() {
+        shoppingWindow.childNodes[1].innerHTML = '';
         const request = new XMLHttpRequest();
         request.open('GET', 'js/data.json');
         request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -116,13 +168,65 @@ window.addEventListener('DOMContentLoaded', () => {
         request.addEventListener('load', () => {
             if (request.status === 200) {
                 const data = JSON.parse(request.response);    
-                for (let key in data) {
+                for (let key in data[userNickname]['stuff']) {
+                    let newElement = addItemList(
+                        data[userNickname]['stuff'][key].name, 
+                        data[userNickname]['stuff'][key].quantity, 
+                        data[userNickname]['stuff'][key].price, 
+                        data[userNickname]['stuff'][key].group, 
+                        data[userNickname]['stuff'][key].stock);
+                    shoppingWindow.childNodes[1].append(newElement);
+                    totalCost += data[userNickname]['stuff'][key].price * (data[userNickname]['stuff'][key].stock - data[userNickname]['stuff'][key].quantity);
+                };
+                shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
+            } else {
+            //Вставить сообщение об ошибке
+            }
+        });
+        
+    }
+
+    function addItemList(name, quantity, price, group, stock) {
+        const newProduct = document.createElement('div');
+        newProduct.classList.add('products__item');
+        newProduct.dataset.name = name;
+        newProduct.dataset.obj = name;
+        newProduct.dataset.group = group;
+        newProduct.dataset.price = price;
+        newProduct.dataset.buy = stock-quantity;
+        newProduct.innerHTML = `
+            <input required disabled placeholder="${name}" value="${name}" name="product-name" type="text" class="input input_new-product input_product">
+            <button data-btnkey="${name}" data-btn="show" class="btn btn_change-product btn_show">${stock-quantity}</button>
+            <button data-btnkey="${name}" data-btn="ok" class="btn btn_change-product bg-green">&#10004;</button>
+            <div data-wrap="${name}" class="btn__wrap hide">
+                <div class="products__stock">Current Stock</div>
+                <input required disabled placeholder="${quantity}" value="${quantity}" type="text" class="input input_stock">
+                <div class="products__price">Stock</div>
+                <input required disabled placeholder="${stock}" value="${stock}" type="text" class="input input_stock">
+                <div class="products__price">Buy</div>
+                <input required disabled placeholder="${stock-quantity}" value="${stock-quantity}" type="text" class="input input_stock">
+                <button data-btnkey="${name}" data-btn="del-from-list" class="btn btn_delete-product">Del</button>
+            </div>
+        `;
+        return newProduct;
+    }
+
+    function openRefreshWindow() {
+        addForm.innerHTML = '';
+        const request = new XMLHttpRequest();
+        request.open('GET', 'js/data.json');
+        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        request.send();
+        request.addEventListener('load', () => {
+            if (request.status === 200) {
+                const data = JSON.parse(request.response);    
+                for (let key in data[userNickname]['stuff']) {
                     let newElement = addNewProduct(
-                        data[key].name, 
-                        data[key].quantity, 
-                        data[key].price, 
-                        data[key].group, 
-                        data[key].stock);
+                        data[userNickname]['stuff'][key].name, 
+                        data[userNickname]['stuff'][key].quantity, 
+                        data[userNickname]['stuff'][key].price, 
+                        data[userNickname]['stuff'][key].group, 
+                        data[userNickname]['stuff'][key].stock);
                     addForm.append(newElement);
                 };    
             } else {

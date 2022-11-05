@@ -60,4 +60,12 @@
         margin-top: 20px;
         margin-bottom: 100px;
     }
+    &_show {
+        background-color: white;
+        font-family: 'Roboto Mono Regular', monospace;
+        color: black; 
+    }
+    &_inset {
+        box-shadow: inset 0px 0px 5px gray;
+    }
 }
