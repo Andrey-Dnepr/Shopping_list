@@ -5,8 +5,9 @@
     border-radius: 8px;
     font-size: 22px;
     background-color: rgb(81, 167, 242);
-    // background-color: rgb(109, 213, 239);
+    // background-color: rgb(177, 235, 135);
     color: #ffffff;
+    // color: #74d4ec;
     border: none;
     text-transform: uppercase;
     box-shadow: 0px 0px 4px gray;
@@ -67,5 +68,9 @@
     }
     &_inset {
         box-shadow: inset 0px 0px 5px gray;
+    }
+    &_hide {
+        font-size: 22px;
+        background-color: rgb(241, 196, 16);
     }
 }

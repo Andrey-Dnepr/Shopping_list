@@ -6,6 +6,7 @@
 @import 'blocks/btn';
 @import 'blocks/input';
 @import 'blocks/products';
+@import 'blocks/resize';
 
 * {
     font-family: 'Amatic SC Regular', sans-serif;
@@ -39,13 +40,6 @@ body {
     position: absolute;
     left: 50vw;
     transform: translateX(-50%);
-}
-
-.pt-5 {
-    padding-top: 5px;
-}
-.bg-green {
-    background-color: rgb(107, 208, 109);
 }
 
 // @import 'blocks/media';
