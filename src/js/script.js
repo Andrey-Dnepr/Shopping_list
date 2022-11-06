@@ -184,7 +184,11 @@ window.addEventListener('DOMContentLoaded', () => {
                             item.style.backgroundColor = 'white';
                             item.childNodes[3].dataset.btn = 'show';
                             item.childNodes[1].style.textDecoration = 'none';
-                            shoppingWindow.childNodes[1].prepend(item);
+                            if (item.dataset.group === '10') {
+                                item.style.backgroundColor = 'rgb(177, 235, 135)';
+                                item.childNodes[1].style.backgroundColor = 'rgb(177, 235, 135)';
+                            }
+                            shoppingWindow.childNodes[1].childNodes[item.dataset.group - 1].prepend(item);
                         }
                     }); 
                 }
@@ -193,14 +197,16 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     function addShoppingList() {
-        shoppingWindow.childNodes[1].innerHTML = '';
+        shoppingWindow.childNodes[1].childNodes.forEach(item => { //очищаем перед записью списка, чтоб если нажали меню и опять шоппинг лист, чтоб позиции не дублировались
+            item.innerHTML = '';
+        });
         const request = new XMLHttpRequest();
         request.open('GET', 'js/data.json');
         request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
         request.send();
         request.addEventListener('load', () => {
             if (request.status === 200) {
-                const data = JSON.parse(request.response);    
+                const data = JSON.parse(request.response);
                 for (let key in data[userNickname]['stuff']) {
                     if (Math.round(data[userNickname]['stuff'][key].stock-data[userNickname]['stuff'][key].quantity) !== 0) {
                         let newElement = addItemList(
@@ -213,19 +219,12 @@ window.addEventListener('DOMContentLoaded', () => {
                             newElement.style.backgroundColor = 'rgb(177, 235, 135)';
                             newElement.childNodes[1].style.backgroundColor = 'rgb(177, 235, 135)';
                         }
-                        shoppingWindow.childNodes[1].append(newElement);
+                        shoppingWindow.childNodes[1].childNodes[data[userNickname]['stuff'][key].group - 1].append(newElement);
                         totalCost += data[userNickname]['stuff'][key].price * Math.round(data[userNickname]['stuff'][key].stock-data[userNickname]['stuff'][key].quantity);
                     }
                 };
                 totalCost = totalCost.toFixed(2);
                 shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
-                productsItems = document.querySelectorAll('.products__item');
-                productsItems.forEach(item => {
-                    if (item.dataset.group === '10') {
-                        shoppingWindow.childNodes[1].append(item);
-                    }
-                });
-
             } else {
             //Вставить сообщение об ошибке
             }
@@ -257,7 +256,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 <input required disabled placeholder="${price}" value="${price}" type="number" class="input input_stock w_75">
                 <div class="products__price">Cost</div>
                 <input required disabled placeholder="${Math.round(stock-quantity)*price}" value="${Math.round(stock-quantity)*price}" type="number" class="input input_stock w_75">
-                <button data-btnkey="${name}" data-btn="hide" class="btn btn_refresh-product">Hide</button>
+                <button data-btnkey="${name}" data-btn="hide" class="btn btn_refresh-product btn_hide">Hide</button>
                 <button data-btnkey="${name}" data-btn="del-from-list" class="btn btn_delete-product">Del</button>
             </div>
         `;
