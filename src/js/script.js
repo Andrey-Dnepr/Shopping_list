@@ -1,12 +1,12 @@
 window.addEventListener('DOMContentLoaded', () => {
     const addForm = document.querySelector('.products__item__wrap'),
+          addNewProductForm = document.querySelector('.products__form'), 
           body = document.querySelector('body'),
           menuWindow = document.querySelector('.menu__window'),
           refreshWindow = document.querySelector('.refresh__window'),
           shoppingWindow = document.querySelector('.list__window');
 
     let productsItems = [],
-        addNewProductForm = [],
         totalCost = 0,
         userNickname = 'account_3'; //в эту переменную записываем данные о текущем пользователе, чтоб подтягтвать его список
 
@@ -23,18 +23,17 @@ window.addEventListener('DOMContentLoaded', () => {
                 shoppingWindow.classList.add('hide');
                 menuWindow.classList.remove('hide');
                 totalCost = 0;
-                break; 
-            case 'refresh-stocks':
-                menuWindow.classList.toggle('hide');
-                refreshWindow.classList.toggle('hide');
-                openRefreshWindow();
-                addNewProductForm = document.querySelector('.products__form'); 
                 break;
             case 'shoping-list':
                 menuWindow.classList.add('hide');    
                 shoppingWindow.classList.toggle('hide');
                 refreshWindow.classList.add('hide');
-                addShoppingList();
+                openShoppingList();
+                break;
+            case 'refresh-stocks':
+                menuWindow.classList.toggle('hide');
+                refreshWindow.classList.toggle('hide');
+                openRefreshWindow();
                 break;
             case 'add-product':
                 if (!addNewProductForm.childNodes[0].value || addNewProductForm.childNodes[0].value === ' ') {
@@ -113,6 +112,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 });
                 break;
             case 'del-from-list':
+                productsItems = document.querySelectorAll('.products__list');
                 productsItems.forEach(item => {
                     if (event.target.dataset.btnkey === item.dataset.obj) {
                         totalCost -= item.childNodes[9].childNodes[19].value;
@@ -123,7 +123,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 });
                 break;
             case 'show':
-                productsItems = document.querySelectorAll('.products__item');
+                totalCost = 0;
+                productsItems = document.querySelectorAll('.products__list');
                 productsItems.forEach(item => {
                     if (event.target.dataset.btnkey === item.dataset.obj) {
                         item.childNodes[7].classList.toggle('hide');
@@ -136,8 +137,11 @@ window.addEventListener('DOMContentLoaded', () => {
                             item.childNodes[9].childNodes[11].placeholder = item.childNodes[9].childNodes[11].value;
                             item.childNodes[3].textContent = item.childNodes[9].childNodes[11].value; 
                         });
-                    }
-                });    
+                    };
+                    totalCost += item.dataset.price * item.childNodes[9].childNodes[11].placeholder
+                });
+                totalCost = totalCost.toFixed(2);
+                shoppingWindow.childNodes[2].childNodes[1].value = totalCost;    
                 break;
             case 'hide':
                 totalCost = 0;
@@ -153,7 +157,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
                 break;    
             case 'ok':
-                productsItems = document.querySelectorAll('.products__item');
+                productsItems = document.querySelectorAll('.products__list');
                 if (event.target.innerHTML === '\u2714') {
                     totalCost = 0;
                     event.target.innerHTML = "Back";
@@ -168,7 +172,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             item.style.backgroundColor = 'gray';
                             item.childNodes[3].dataset.btn = 'none';
                             item.childNodes[1].style.textDecoration = 'line-through';
-                            shoppingWindow.childNodes[1].append(item);
+                            shoppingWindow.childNodes[1].childNodes[10].append(item);
                         }
                         totalCost += item.dataset.price * item.childNodes[9].childNodes[11].placeholder
                     });
@@ -196,7 +200,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function addShoppingList() {
+    function openShoppingList() {
         shoppingWindow.childNodes[1].childNodes.forEach(item => { //очищаем перед записью списка, чтоб если нажали меню и опять шоппинг лист, чтоб позиции не дублировались
             item.innerHTML = '';
         });
@@ -234,7 +238,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function addItemList(name, quantity, price, group, stock) {
         const newProduct = document.createElement('div');
-        newProduct.classList.add('products__item');
+        newProduct.classList.add('products__list');
         newProduct.dataset.name = name;
         newProduct.dataset.obj = name;
         newProduct.dataset.group = group;

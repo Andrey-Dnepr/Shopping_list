@@ -18,11 +18,28 @@
         width: 350px;
         &__wrap {
             width: 350px;
-            &_1, &_2, &_3, &_4, &_5, &_6, &_7, &_8, &_9, &_10 {
+        }
+    }
+    &__list {
+        display: flex;
+        padding: 10px 10px;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        align-content: center;
+        margin: 5px 0;
+        border: 1px solid #c8c4c4;
+        border-radius: 8px;
+        width: 350px;
+        &__wrap {
+            width: 350px;
+            &_1, &_2, &_3, &_4, &_5, &_6, &_7, &_8, &_9, &_10, &_11 {
                 width: 350px;
             }
         }
     }
+
+
     &__quantity {
         width: 200px;
         height: 40px;
