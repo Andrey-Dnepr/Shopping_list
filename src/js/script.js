@@ -18,7 +18,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
             //     break;
             case 'menu':
-                //Вставит приветствие Hello "nickname"! What do we do?
                 refreshWindow.classList.add('hide');
                 shoppingWindow.classList.add('hide');
                 menuWindow.classList.remove('hide');
@@ -49,7 +48,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     );
                     addForm.prepend(newElement);
                     //сделать отправку новых данных на сервер
-                    addNewProductForm.reset(); //сбрасываем значение форм
+                    addNewProductForm.reset();
                     addNewProductForm.childNodes[0].style.backgroundColor = 'white';
                     addNewProductForm.childNodes[0].placeholder = "The product's name";
                 }
@@ -61,10 +60,11 @@ window.addEventListener('DOMContentLoaded', () => {
                     event.target.style.backgroundColor = 'rgb(244, 204, 43)';
                     productsItems.forEach(item => {
                         if (event.target.dataset.btnkey === item.dataset.obj) {
-                            item.childNodes[7].classList.toggle('hide');
-                            item.childNodes[9].classList.toggle('hide');
+                            // item.childNodes[7].classList.toggle('hide');
+                            // item.childNodes[9].classList.toggle('hide');
                             item.childNodes[1].disabled = false;
                             item.childNodes[3].disabled = false;
+                            item.style.height = '172px';
                         }
                     });    
                 } else {
@@ -77,10 +77,11 @@ window.addEventListener('DOMContentLoaded', () => {
                             item.childNodes[9].childNodes[3].value = item.childNodes[9].childNodes[3].placeholder;
                             item.childNodes[9].childNodes[9].value = item.childNodes[9].childNodes[7].placeholder;
                             item.childNodes[9].childNodes[11].value = item.childNodes[9].childNodes[11].placeholder;
-                            item.childNodes[9].classList.toggle('hide');
-                            item.childNodes[7].classList.toggle('hide');
+                            // item.childNodes[9].classList.toggle('hide');
+                            // item.childNodes[7].classList.toggle('hide');
                             item.childNodes[1].disabled = true;
                             item.childNodes[3].disabled = true;
+                            item.style.height = '62px';
                         }
                     });
                 }
@@ -95,10 +96,11 @@ window.addEventListener('DOMContentLoaded', () => {
                         item.childNodes[9].childNodes[11].placeholder = item.childNodes[9].childNodes[11].value;
                         item.childNodes[5].innerHTML = "Edit";
                         item.childNodes[5].style.backgroundColor = 'rgb(81, 167, 242)';
-                        item.childNodes[7].classList.toggle('hide'); //под 7 номером у родителя находится елемент с тегом .btn__wrap
-                        item.childNodes[9].classList.toggle('hide');
+                        // item.childNodes[7].classList.toggle('hide'); //под 7 номером у родителя находится елемент с тегом .btn__wrap
+                        // item.childNodes[9].classList.toggle('hide');
                         item.childNodes[1].disabled = true;
                         item.childNodes[3].disabled = true;
+                        item.style.height = '62px';
                         //Сделать отправку ПОСТ запроса на сервер с обновленными данными
                     }
                 });
@@ -127,8 +129,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 productsItems = document.querySelectorAll('.products__list');
                 productsItems.forEach(item => {
                     if (event.target.dataset.btnkey === item.dataset.obj) {
-                        item.childNodes[7].classList.toggle('hide');
-                        item.childNodes[9].classList.toggle('hide');
+                        if (item.style.height === '223px') {
+                            item.style.height = '62px';    
+                        } else {
+                            item.style.height = '223px'
+                        }
                         item.childNodes[3].classList.toggle('btn_inset');
                         item.childNodes[9].childNodes[11].disabled = false;
                         item.childNodes[9].childNodes[11].style.backgroundColor = '#74d4ec';
@@ -147,8 +152,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 totalCost = 0;
                 productsItems.forEach(item => {
                     if (event.target.dataset.btnkey === item.dataset.obj) {
-                        item.childNodes[7].classList.toggle('hide');
-                        item.childNodes[9].classList.toggle('hide');
+                        item.style.height = '62px';
                         item.childNodes[3].classList.toggle('btn_inset');
                     }
                     totalCost += item.dataset.price * item.childNodes[9].childNodes[11].placeholder
@@ -164,8 +168,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     event.target.style.backgroundColor = 'rgb(24, 100, 223)';
                     productsItems.forEach(item => {
                         if (event.target.dataset.btnkey === item.dataset.obj) {
-                            item.childNodes[7].classList.add('hide');
-                            item.childNodes[9].classList.add('hide');
+                            item.style.height = '62px';
                             item.childNodes[3].classList.remove('btn_inset');
                             item.childNodes[1].style.backgroundColor = 'gray';
                             item.childNodes[3].style.backgroundColor = 'gray';
@@ -248,8 +251,8 @@ window.addEventListener('DOMContentLoaded', () => {
             <input required disabled placeholder="${name}" value="${name}" name="product-name" type="text" class="input input_new-product input_product">
             <button data-btnkey="${name}" data-btn="show" class="btn btn_change-product btn_show">${Math.round(stock-quantity)}</button>
             <button data-btnkey="${name}" data-btn="ok" class="btn btn_change-product bg-green">&#10004;</button>
-            <div class="input_divider hide"></div>
-            <div data-wrap="${name}" class="btn__wrap hide">
+            <div class="input_divider"></div>
+            <div data-wrap="${name}" class="btn__wrap">
                 <div class="products__stock">Current Stock</div>
                 <input required disabled placeholder="${quantity}" value="${quantity}" type="number" class="input input_stock w_40">
                 <div class="products__price">Stock</div>
@@ -304,8 +307,8 @@ window.addEventListener('DOMContentLoaded', () => {
             <input required disabled placeholder="${name}" value="${name}" name="product-name" type="text" class="input input_new-product input_product">
             <input required disabled placeholder="${quantity}" value="${quantity}" name="product-quantity" type="text" class="input input_new-quantity input_quantity">
             <button data-btnkey="${name}" data-btn="change-product" class="btn btn_change-product">Edit</button>
-            <div class="input_divider hide"></div>
-            <div data-wrap="${name}" class="btn__wrap hide">
+            <div class="input_divider"></div>
+            <div data-wrap="${name}" class="btn__wrap">
                 <div class="products__price">Price</div>
                 <input required placeholder="${price}" value="${price}" name="product-price" type="text" class="input input_price">
                 <div class="products__group">Product group</div>
@@ -318,7 +321,5 @@ window.addEventListener('DOMContentLoaded', () => {
         `;
         return newProduct;
     }
-
-    
 
 });
