@@ -60,8 +60,6 @@ window.addEventListener('DOMContentLoaded', () => {
                     event.target.style.backgroundColor = 'rgb(244, 204, 43)';
                     productsItems.forEach(item => {
                         if (event.target.dataset.btnkey === item.dataset.obj) {
-                            // item.childNodes[7].classList.toggle('hide');
-                            // item.childNodes[9].classList.toggle('hide');
                             item.childNodes[1].disabled = false;
                             item.childNodes[3].disabled = false;
                             item.style.height = '172px';
@@ -77,8 +75,6 @@ window.addEventListener('DOMContentLoaded', () => {
                             item.childNodes[9].childNodes[3].value = item.childNodes[9].childNodes[3].placeholder;
                             item.childNodes[9].childNodes[9].value = item.childNodes[9].childNodes[7].placeholder;
                             item.childNodes[9].childNodes[11].value = item.childNodes[9].childNodes[11].placeholder;
-                            // item.childNodes[9].classList.toggle('hide');
-                            // item.childNodes[7].classList.toggle('hide');
                             item.childNodes[1].disabled = true;
                             item.childNodes[3].disabled = true;
                             item.style.height = '62px';
@@ -96,8 +92,6 @@ window.addEventListener('DOMContentLoaded', () => {
                         item.childNodes[9].childNodes[11].placeholder = item.childNodes[9].childNodes[11].value;
                         item.childNodes[5].innerHTML = "Edit";
                         item.childNodes[5].style.backgroundColor = 'rgb(81, 167, 242)';
-                        // item.childNodes[7].classList.toggle('hide'); //под 7 номером у родителя находится елемент с тегом .btn__wrap
-                        // item.childNodes[9].classList.toggle('hide');
                         item.childNodes[1].disabled = true;
                         item.childNodes[3].disabled = true;
                         item.style.height = '62px';
@@ -162,20 +156,42 @@ window.addEventListener('DOMContentLoaded', () => {
                 break;    
             case 'ok':
                 productsItems = document.querySelectorAll('.products__list');
+                function hideElement(item, event) {
+                    shoppingWindow.childNodes[1].childNodes[10].append(item);
+                    item.style.opacity = '1';
+                    event.target.classList.toggle('hide');
+                }
+                function backElement(item, event) {
+                    shoppingWindow.childNodes[1].childNodes[item.dataset.group - 1].prepend(item);
+                    item.classList.remove('animate__bounceOutDown');
+                    item.childNodes[3].dataset.btn = 'show';
+                    item.childNodes[1].style.textDecoration = 'none';
+                    item.childNodes[1].style.backgroundColor = 'white';
+                    item.childNodes[3].style.backgroundColor = 'white';
+                    item.style.backgroundColor = 'white';
+                    if (item.dataset.group === '10') {
+                        item.style.backgroundColor = 'rgb(177, 235, 135)';
+                        item.childNodes[1].style.backgroundColor = 'rgb(177, 235, 135)';
+                    }
+                    event.target.classList.toggle('hide');
+                }
                 if (event.target.innerHTML === '\u2714') {
                     totalCost = 0;
                     event.target.innerHTML = "Back";
                     event.target.style.backgroundColor = 'rgb(24, 100, 223)';
                     productsItems.forEach(item => {
                         if (event.target.dataset.btnkey === item.dataset.obj) {
+                            item.classList.add('animate__bounceOutDown');
+                            event.target.classList.toggle('hide');
                             item.style.height = '62px';
+                            item.style.opacity = '0';
                             item.childNodes[3].classList.remove('btn_inset');
                             item.childNodes[1].style.backgroundColor = 'gray';
                             item.childNodes[3].style.backgroundColor = 'gray';
                             item.style.backgroundColor = 'gray';
                             item.childNodes[3].dataset.btn = 'none';
                             item.childNodes[1].style.textDecoration = 'line-through';
-                            shoppingWindow.childNodes[1].childNodes[10].append(item);
+                            setTimeout(hideElement, 500, item, event);
                         }
                         totalCost += item.dataset.price * item.childNodes[9].childNodes[11].placeholder
                     });
@@ -186,16 +202,8 @@ window.addEventListener('DOMContentLoaded', () => {
                     event.target.style.backgroundColor = 'rgb(107, 208, 109)';
                     productsItems.forEach(item => {
                         if (event.target.dataset.btnkey === item.dataset.obj) {
-                            item.childNodes[1].style.backgroundColor = 'white';
-                            item.childNodes[3].style.backgroundColor = 'white';
-                            item.style.backgroundColor = 'white';
-                            item.childNodes[3].dataset.btn = 'show';
-                            item.childNodes[1].style.textDecoration = 'none';
-                            if (item.dataset.group === '10') {
-                                item.style.backgroundColor = 'rgb(177, 235, 135)';
-                                item.childNodes[1].style.backgroundColor = 'rgb(177, 235, 135)';
-                            }
-                            shoppingWindow.childNodes[1].childNodes[item.dataset.group - 1].prepend(item);
+                            event.target.classList.toggle('hide');
+                            setTimeout(backElement, 200, item, event);
                         }
                     }); 
                 }
@@ -241,7 +249,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function addItemList(name, quantity, price, group, stock) {
         const newProduct = document.createElement('div');
-        newProduct.classList.add('products__list');
+        newProduct.classList.add('products__list', 'animate__animated', 'animate__backInLeft');
         newProduct.dataset.name = name;
         newProduct.dataset.obj = name;
         newProduct.dataset.group = group;
@@ -300,7 +308,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (group === '') {group = 1};
         if (stock === '') {stock = 0};
         const newProduct = document.createElement('div');
-        newProduct.classList.add('products__item');
+        newProduct.classList.add('products__item', 'animate__animated', 'animate__backInLeft');
         newProduct.dataset.obj = name;
         newProduct.dataset.name = name;
         newProduct.innerHTML = `
