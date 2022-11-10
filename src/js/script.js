@@ -12,6 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     let productsItems = [],
         totalCost = 0,
+        saveList = {},
         userNickname = 'account_3'; //в эту переменную записываем данные о текущем пользователе, чтоб подтягтвать его список
 
     body.addEventListener('click', (event) => {
@@ -216,6 +217,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
                 break;
             case 'plus-list':
+                event.target.classList.add('animate__animated', 'animate__flip');
                 addFormList.classList.toggle('hide');
                 if (event.target.innerHTML === '+') {
                     event.target.innerHTML = '-';
@@ -224,6 +226,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     event.target.innerHTML = '+';
                     event.target.style.backgroundColor = 'rgb(107, 208, 109)';
                 }
+                setTimeout(() => event.target.classList.remove('animate__animated', 'animate__flip'), 2000);
                 break;
             case 'add-product-list':
                 if (!addNewProductList.childNodes[0].value || addNewProductList.childNodes[0].value === ' ') {
@@ -254,44 +257,88 @@ window.addEventListener('DOMContentLoaded', () => {
                     addNewProductList.childNodes[0].placeholder = "The product's name";
                 }
                 break;
+            case 'save-list':
+                event.target.classList.add('animate__animated', 'animate__flip');
+                saveList = {};
+                productsItems = document.querySelectorAll('.products__list');
+                productsItems.forEach((item, key) => {
+                    saveList[key] = {
+                        name : item.childNodes[1].value,
+                        buy : item.childNodes[3].innerHTML,
+                        curentStock : item.childNodes[9].childNodes[3].value,
+                        minStock : item.childNodes[9].childNodes[7].value,
+                        price : item.childNodes[9].childNodes[15].value,
+                        cost : item.childNodes[9].childNodes[19].value,
+                        group : item.dataset.group
+                    }
+                });
+                setTimeout(() => event.target.classList.remove('animate__animated', 'animate__flip'), 2000);
+                //сделать отправку сохраненного списка на сервер
+                break;
+            case 'load-list':
+                event.target.classList.add('animate__animated', 'animate__flip');
+                openShoppingList(saveList);
+                setTimeout(() => event.target.classList.remove('animate__animated', 'animate__flip'), 2000);
+                break;    
         }
     });
 
-    function openShoppingList() {
-        shoppingWindow.childNodes[1].childNodes.forEach((item, key) => { //очищаем перед записью списка, чтоб если нажали меню и опять шоппинг лист, чтоб позиции не дублировались
+    function openShoppingList(data) {
+        shoppingWindow.childNodes[1].childNodes.forEach(item => { //очищаем перед записью списка, чтоб если нажали меню и опять шоппинг лист, чтоб позиции не дублировались
             if (!item.classList.contains('products__list__wrap_12')) {
                 item.innerHTML = '';
             }
         });
-        const request = new XMLHttpRequest();
-        request.open('GET', 'js/data.json');
-        request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        request.send();
-        request.addEventListener('load', () => {
-            if (request.status === 200) {
-                const data = JSON.parse(request.response);
-                for (let key in data[userNickname]['stuff']) {
-                    if (Math.round(data[userNickname]['stuff'][key].stock-data[userNickname]['stuff'][key].quantity) !== 0) {
-                        let newElement = addItemList(
-                            data[userNickname]['stuff'][key].name, 
-                            data[userNickname]['stuff'][key].quantity, 
-                            data[userNickname]['stuff'][key].price, 
-                            data[userNickname]['stuff'][key].group, 
-                            data[userNickname]['stuff'][key].stock);
-                        if (data[userNickname]['stuff'][key].group === 10) {
-                            newElement.style.backgroundColor = 'rgb(177, 235, 135)';
-                            newElement.childNodes[1].style.backgroundColor = 'rgb(177, 235, 135)';
+        if (typeof(data) !== 'undefined') {
+            totalCost = 0;
+            for (let key in data) {
+                let newElement = addItemList(
+                    data[key].name, 
+                    data[key].curentStock, 
+                    data[key].price, 
+                    data[key].group, 
+                    data[key].minStock);
+                if (data[key].group === "10") {
+                    newElement.style.backgroundColor = 'rgb(177, 235, 135)';
+                    newElement.childNodes[1].style.backgroundColor = 'rgb(177, 235, 135)';
+                }
+                shoppingWindow.childNodes[1].childNodes[data[key].group - 1].append(newElement);
+                totalCost += data[key].price * Math.round(data[key].minStock - data[key].curentStock);
+            };
+            totalCost = totalCost.toFixed(2);
+            shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
+        } else {
+            const request = new XMLHttpRequest();
+            request.open('GET', 'js/data.json');
+            request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            request.send();
+            request.addEventListener('load', () => {
+                if (request.status === 200) {
+                    const data = JSON.parse(request.response);
+                    for (let key in data[userNickname]['stuff']) {
+                        if (Math.round(data[userNickname]['stuff'][key].stock-data[userNickname]['stuff'][key].quantity) !== 0) {
+                            let newElement = addItemList(
+                                data[userNickname]['stuff'][key].name, 
+                                data[userNickname]['stuff'][key].quantity, 
+                                data[userNickname]['stuff'][key].price, 
+                                data[userNickname]['stuff'][key].group, 
+                                data[userNickname]['stuff'][key].stock);
+                            if (data[userNickname]['stuff'][key].group === 10) {
+                                newElement.style.backgroundColor = 'rgb(177, 235, 135)';
+                                newElement.childNodes[1].style.backgroundColor = 'rgb(177, 235, 135)';
+                            }
+                            shoppingWindow.childNodes[1].childNodes[data[userNickname]['stuff'][key].group - 1].append(newElement);
+                            totalCost += data[userNickname]['stuff'][key].price * Math.round(data[userNickname]['stuff'][key].stock-data[userNickname]['stuff'][key].quantity);
                         }
-                        shoppingWindow.childNodes[1].childNodes[data[userNickname]['stuff'][key].group - 1].append(newElement);
-                        totalCost += data[userNickname]['stuff'][key].price * Math.round(data[userNickname]['stuff'][key].stock-data[userNickname]['stuff'][key].quantity);
-                    }
-                };
-                totalCost = totalCost.toFixed(2);
-                shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
-            } else {
-            //Вставить сообщение об ошибке
-            }
-        });
+                    };
+                    totalCost = totalCost.toFixed(2);
+                    shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
+                } else {
+                //Вставить сообщение об ошибке
+                }
+            });
+        }
+        
         
     }
 
