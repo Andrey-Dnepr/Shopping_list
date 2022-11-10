@@ -26,8 +26,9 @@
         flex-wrap: wrap;
         gap: 10px;
         justify-content: center;
+        align-items: center;
     }
-    &_add-product, &_change-product, &_refresh-product, &_delete-product {
+    &_add-product, &_change-product, &_refresh-product, &_delete-product, &_small {
         width: 50px;
         height: 40px;
         font-size: 22px;
@@ -59,7 +60,7 @@
         display: block;
         margin: 0 auto;
         margin-top: 20px;
-        margin-bottom: 100px;
+        margin-bottom: 80px;
     }
     &_show {
         background-color: white;

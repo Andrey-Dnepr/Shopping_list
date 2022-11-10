@@ -1,10 +1,14 @@
 window.addEventListener('DOMContentLoaded', () => {
     const addForm = document.querySelector('.products__item__wrap'),
-          addNewProductForm = document.querySelector('.products__form'), 
+          addNewProductForm = document.querySelector('.ref-form'),
+          addNewProductList = document.querySelector('.list-form'), 
           body = document.querySelector('body'),
           menuWindow = document.querySelector('.menu__window'),
           refreshWindow = document.querySelector('.refresh__window'),
-          shoppingWindow = document.querySelector('.list__window');
+          shoppingWindow = document.querySelector('.list__window'),
+          groupListWrap = document.querySelector('.products__list__wrap'),
+          addFormList = document.querySelector('.products__list__wrap_12'),
+          buttonPlus =  document.querySelector('.btn_plus');
 
     let productsItems = [],
         totalCost = 0,
@@ -27,6 +31,9 @@ window.addEventListener('DOMContentLoaded', () => {
                 menuWindow.classList.add('hide');    
                 shoppingWindow.classList.toggle('hide');
                 refreshWindow.classList.add('hide');
+                addFormList.classList.add('hide');
+                buttonPlus.innerHTML = '+';
+                buttonPlus.style.backgroundColor = 'rgb(107, 208, 109)';
                 openShoppingList();
                 break;
             case 'refresh-stocks':
@@ -208,12 +215,53 @@ window.addEventListener('DOMContentLoaded', () => {
                     }); 
                 }
                 break;
+            case 'plus-list':
+                addFormList.classList.toggle('hide');
+                if (event.target.innerHTML === '+') {
+                    event.target.innerHTML = '-';
+                    event.target.style.backgroundColor = 'rgb(24, 100, 223)';
+                } else {
+                    event.target.innerHTML = '+';
+                    event.target.style.backgroundColor = 'rgb(107, 208, 109)';
+                }
+                break;
+            case 'add-product-list':
+                if (!addNewProductList.childNodes[0].value || addNewProductList.childNodes[0].value === ' ') {
+                    addNewProductList.childNodes[0].placeholder = 'Enter a product name!';
+                    addNewProductList.childNodes[0].style.backgroundColor = 'rgb(109, 213, 239)';
+                } else {
+                    totalCost = 0;
+                    let newElement = addItemList(
+                        addNewProductList.childNodes[0].value,
+                        0,
+                        (addNewProductList.childNodes[4].value || 0),
+                        addNewProductList.childNodes[6].value,
+                        addNewProductList.childNodes[2].value
+                    );
+                    if (addNewProductList.childNodes[6].value === '10') {
+                        newElement.style.backgroundColor = 'rgb(177, 235, 135)';
+                        newElement.childNodes[1].style.backgroundColor = 'rgb(177, 235, 135)';
+                    }
+                    groupListWrap.childNodes[addNewProductList.childNodes[6].value-1].append(newElement);
+                    addNewProductList.reset();
+                    productsItems = document.querySelectorAll('.products__list');
+                    productsItems.forEach(item => {
+                        totalCost += item.dataset.price * item.childNodes[9].childNodes[11].placeholder
+                    });
+                    totalCost = totalCost.toFixed(2);
+                    shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
+                    addNewProductList.childNodes[0].style.backgroundColor = 'white';
+                    addNewProductList.childNodes[0].placeholder = "The product's name";
+                }
+                break;
         }
     });
 
     function openShoppingList() {
-        shoppingWindow.childNodes[1].childNodes.forEach(item => { //очищаем перед записью списка, чтоб если нажали меню и опять шоппинг лист, чтоб позиции не дублировались
-            item.innerHTML = '';
+        shoppingWindow.childNodes[1].childNodes.forEach((item, key) => { //очищаем перед записью списка, чтоб если нажали меню и опять шоппинг лист, чтоб позиции не дублировались
+            if (!item.classList.contains('products__list__wrap_12')) {
+                item.innerHTML = '';
+            }
         });
         const request = new XMLHttpRequest();
         request.open('GET', 'js/data.json');
@@ -263,7 +311,7 @@ window.addEventListener('DOMContentLoaded', () => {
             <div data-wrap="${name}" class="btn__wrap">
                 <div class="products__stock">Current Stock</div>
                 <input required disabled placeholder="${quantity}" value="${quantity}" type="number" class="input input_stock w_40">
-                <div class="products__price">Stock</div>
+                <div class="products__stock">Min Stock</div>
                 <input required disabled placeholder="${stock}" value="${stock}" type="number" class="input input_stock w_40">
                 <div class="products__price">Buy</div>
                 <input required disabled placeholder="${Math.round(stock-quantity)}" value="${Math.round(stock-quantity)}" type="number" class="input input_stock w_40">

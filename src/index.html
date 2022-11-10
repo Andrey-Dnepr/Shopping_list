@@ -33,11 +33,11 @@
     <div class="refresh__window hide">
         <div class="products">
             <div class="title__list animate__animated animate__backInRight">Refresh stocks</div>
-            <form action="#" class="products__form animate__animated animate__backInRight">
+            <form action="#" class="ref-form products__form animate__animated animate__backInRight">
                 <input placeholder="The product's name" name="product-name" type="text" class="input input_new-product">
-                <input placeholder="stock" name="product-quantity" type="text" class="input input_new-quantity">
+                <input placeholder="Current Stock" name="product-quantity" type="text" class="input input_new-stock w_85">
                 <input placeholder="Price" name="product-price" type="text" class="input input_new-price">
-                <input placeholder="1-10" name="product-group" type="text" class="input input_new-group">
+                <input placeholder="Group 1-10" name="product-group" type="text" class="input input_new-group">
                 <input placeholder="min stock" name="product-stock" type="text" class="input input_new-stock">
                 <button data-btn="add-product" class="btn btn_add-product">Add</button>
             </form> 
@@ -66,6 +66,18 @@
             <div class="products__list__wrap_9"></div>
             <div class="products__list__wrap_10"></div>
             <div class="products__list__wrap_11"></div>
+            <div class="products__list__wrap_12 animate__animated animate__backInDown hide">
+                <form action="#" class="list-form products__form products__form_list">
+                    <input placeholder="The product's name" name="product-name" type="text" class="input input_new-product">
+                    <div class="products__price">Buy</div>
+                    <input placeholder="Buy" name="product-quantity" value="1" type="text" class="input input_new-quantity">
+                    <div class="products__price">Price</div>
+                    <input placeholder="0,00" name="product-price" type="text" class="input input_new-quantity">
+                    <div class="products__price">Group</div>
+                    <input placeholder="1-10" name="product-group" value="1" type="text" class="input input_new-quantity">
+                    <button data-btn="add-product-list" class="btn btn_add-product">Add</button>
+                </form>
+            </div>  
         </div>
 
         <div class="products__total__wrap animate__animated animate__backInUp">
@@ -73,8 +85,12 @@
             <input required disabled placeholder="0" value="0" name="total-money" type="number" class="input input_stock w_100">
         </div>
 
-        <button data-btn="menu" class="btn btn_menu animate__animated animate__backInUp">Main menu</button>
-        
+        <div class="btn__wrap">
+            <button data-btn="menu" class="btn btn_menu animate__animated animate__backInUp">Main menu</button>
+            <button data-btn="save-list" class="btn btn_menu btn_small animate__animated animate__backInUp">Save</button>
+            <button data-btn="load-list" class="btn btn_menu btn_small animate__animated animate__backInUp">Load</button>
+            <button data-btn="plus-list" class="btn btn_menu btn_small btn_plus fz_50 animate__animated animate__backInUp">+</button>
+        </div>
     </div>
     
     <script src="js/script.js"></script>

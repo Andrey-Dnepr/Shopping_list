@@ -10,6 +10,9 @@
     }
     &__form {
         padding-top: 0;
+        &_list {
+            padding-top: 10px;
+        }
     }
     &__item {
         align-content: flex-start;
@@ -40,8 +43,13 @@
         transition: all .5s ease-out;
         &__wrap {
             width: 350px;
-            &_1, &_2, &_3, &_4, &_5, &_6, &_7, &_8, &_9, &_10, &_11 {
+            &_1, &_2, &_3, &_4, &_5, &_6, &_7, &_8, &_9, &_10, &_11, &_12 {
                 width: 350px;
+            }
+            &_12 {
+                border: 1px solid #c8c4c4;
+                border-radius: 8px;   
+                background-color: rgb(208, 200, 200); 
             }
         }
     }
