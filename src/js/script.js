@@ -119,10 +119,11 @@ window.addEventListener('DOMContentLoaded', () => {
                 productsItems = document.querySelectorAll('.products__list');
                 productsItems.forEach(item => {
                     if (event.target.dataset.btnkey === item.dataset.obj) {
+                        item.classList.add('animate__animated', 'animate__bounceOutRight');
                         totalCost -= item.childNodes[9].childNodes[19].value;
                         totalCost = totalCost.toFixed(2);
-                        shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
-                        item.remove();
+                        shoppingWindow.childNodes[2].childNodes[1].innerHTML = totalCost;
+                        setTimeout(() => item.remove(), 800);
                     }
                 });
                 break;
@@ -148,7 +149,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     totalCost += item.dataset.price * item.childNodes[9].childNodes[11].placeholder
                 });
                 totalCost = totalCost.toFixed(2);
-                shoppingWindow.childNodes[2].childNodes[1].value = totalCost;    
+                shoppingWindow.childNodes[2].childNodes[1].innerHTML = totalCost;    
                 break;
             case 'hide':
                 totalCost = 0;
@@ -160,7 +161,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     totalCost += item.dataset.price * item.childNodes[9].childNodes[11].placeholder
                 });
                 totalCost = totalCost.toFixed(2);
-                shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
+                shoppingWindow.childNodes[2].childNodes[1].innerHTML = totalCost;
                 break;    
             case 'ok':
                 productsItems = document.querySelectorAll('.products__list');
@@ -204,7 +205,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         totalCost += item.dataset.price * item.childNodes[9].childNodes[11].placeholder
                     });
                     totalCost = totalCost.toFixed(2);
-                    shoppingWindow.childNodes[2].childNodes[1].value = totalCost;    
+                    shoppingWindow.childNodes[2].childNodes[1].innerHTML = totalCost;    
                 } else {
                     event.target.innerHTML = "&#10004;";
                     event.target.style.backgroundColor = 'rgb(107, 208, 109)';
@@ -252,7 +253,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         totalCost += item.dataset.price * item.childNodes[9].childNodes[11].placeholder
                     });
                     totalCost = totalCost.toFixed(2);
-                    shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
+                    shoppingWindow.childNodes[2].childNodes[1].innerHTML = totalCost;
                     addNewProductList.childNodes[0].style.backgroundColor = 'white';
                     addNewProductList.childNodes[0].placeholder = "The product's name";
                 }
@@ -306,7 +307,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 totalCost += data[key].price * Math.round(data[key].minStock - data[key].curentStock);
             };
             totalCost = totalCost.toFixed(2);
-            shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
+            shoppingWindow.childNodes[2].childNodes[1].innerHTML = totalCost;
         } else {
             const request = new XMLHttpRequest();
             request.open('GET', 'js/data.json');
@@ -332,7 +333,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         }
                     };
                     totalCost = totalCost.toFixed(2);
-                    shoppingWindow.childNodes[2].childNodes[1].value = totalCost;
+                    shoppingWindow.childNodes[2].childNodes[1].innerHTML = totalCost;
                 } else {
                 //Вставить сообщение об ошибке
                 }
