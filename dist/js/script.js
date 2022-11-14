@@ -68,8 +68,8 @@ window.addEventListener('DOMContentLoaded', () => {
                     event.target.style.backgroundColor = 'rgb(244, 204, 43)';
                     productsItems.forEach(item => {
                         if (event.target.dataset.btnkey === item.dataset.obj) {
-                            item.childNodes[1].disabled = false;
-                            item.childNodes[3].disabled = false;
+                            item.childNodes[1].removeAttribute('readonly');
+                            item.childNodes[3].removeAttribute('readonly');
                             item.style.height = '172px';
                         }
                     });    
@@ -83,8 +83,8 @@ window.addEventListener('DOMContentLoaded', () => {
                             item.childNodes[9].childNodes[3].value = item.childNodes[9].childNodes[3].placeholder;
                             item.childNodes[9].childNodes[9].value = item.childNodes[9].childNodes[7].placeholder;
                             item.childNodes[9].childNodes[11].value = item.childNodes[9].childNodes[11].placeholder;
-                            item.childNodes[1].disabled = true;
-                            item.childNodes[3].disabled = true;
+                            item.childNodes[1].setAttribute('readonly', 'true');
+                            item.childNodes[3].setAttribute('readonly', 'true');
                             item.style.height = '62px';
                         }
                     });
@@ -100,8 +100,8 @@ window.addEventListener('DOMContentLoaded', () => {
                         item.childNodes[9].childNodes[11].placeholder = item.childNodes[9].childNodes[11].value;
                         item.childNodes[5].innerHTML = "Edit";
                         item.childNodes[5].style.backgroundColor = 'rgb(81, 167, 242)';
-                        item.childNodes[1].disabled = true;
-                        item.childNodes[3].disabled = true;
+                        item.childNodes[1].setAttribute('readonly', 'true');
+                        item.childNodes[3].setAttribute('readonly', 'true');
                         item.style.height = '62px';
                         //Сделать отправку ПОСТ запроса на сервер с обновленными данными
                     }
@@ -263,7 +263,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 productsItems = document.querySelectorAll('.products__list');
                 productsItems.forEach((item, key) => {
                     saveList[key] = {
-                        name : item.childNodes[1].value,
+                        name : item.childNodes[1].innerHTML,
                         buy : item.childNodes[3].innerHTML,
                         curentStock : item.childNodes[9].childNodes[3].value,
                         minStock : item.childNodes[9].childNodes[7].value,
@@ -351,7 +351,7 @@ window.addEventListener('DOMContentLoaded', () => {
         newProduct.dataset.price = price;
         newProduct.dataset.buy = stock-quantity;
         newProduct.innerHTML = `
-            <input required disabled placeholder="${name}" value="${name}" name="product-name" type="text" class="input input_new-product input_product">
+            <div class="input input_new-product input_product pt-3">${name}</div>
             <button data-btnkey="${name}" data-btn="show" class="btn btn_change-product btn_show">${Math.round(stock-quantity)}</button>
             <button data-btnkey="${name}" data-btn="ok" class="btn btn_change-product bg-green">&#10004;</button>
             <div class="input_divider"></div>
@@ -374,6 +374,8 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function openRefreshWindow() {
+        addNewProductForm.childNodes[0].style.backgroundColor = 'white';
+        addNewProductForm.childNodes[0].placeholder = "The product's name";
         addForm.innerHTML = '';
         const request = new XMLHttpRequest();
         request.open('GET', 'js/data.json');
@@ -407,8 +409,8 @@ window.addEventListener('DOMContentLoaded', () => {
         newProduct.dataset.obj = name;
         newProduct.dataset.name = name;
         newProduct.innerHTML = `
-            <input required disabled placeholder="${name}" value="${name}" name="product-name" type="text" class="input input_new-product input_product">
-            <input required disabled placeholder="${quantity}" value="${quantity}" name="product-quantity" type="text" class="input input_new-quantity input_quantity">
+            <input required readonly placeholder="${name}" value="${name}" name="product-name" type="text" class="input input_new-product input_product">
+            <input required readonly placeholder="${quantity}" value="${quantity}" name="product-quantity" type="text" class="input input_new-quantity input_quantity">
             <button data-btnkey="${name}" data-btn="change-product" class="btn btn_change-product">Edit</button>
             <div class="input_divider"></div>
             <div data-wrap="${name}" class="btn__wrap">
